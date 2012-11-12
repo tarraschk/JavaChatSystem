@@ -1,10 +1,26 @@
 import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.InetAddress;
+import java.rmi.Naming;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
 public class ChatServer extends UnicastRemoteObject implements Chat {
 	protected LinkedList<Client> listeClients;
 	protected LinkedList<String> historiqueMessages;
 	protected int port;
+	protected String URL;
+	
+	/* Getters et setters de Url */
+	public String getURL() {
+		return URL;
+	}
+	public void setURL(String uRL) {
+		URL = uRL;
+	}
 	
 	/* Méthodes liées à l'argument listeClients */
 	public LinkedList<Client> getListeClients() {
@@ -47,26 +63,50 @@ public class ChatServer extends UnicastRemoteObject implements Chat {
 		historiqueMessages = historique;
 	}
 	
-	// Implémentation de la méthode distante
+	/**
+	 * affiche l'historique des messages (= la conversation)
+	 * @throws java.rmi.RemoteException
+	 */
 	public void afficherHistoriqueMessage() throws java.rmi.RemoteException {
 		for(String s:historiqueMessages)
 			System.out.println(s);
 	}
 	
-	public void send(String message){
+	public void send(String message) throws java.rmi.RemoteException{
 		
 	}
 	
-	public void connect(int id){
+	public void connect(int id) throws java.rmi.RemoteException{
 		
 	}
 	
-	public void bye(){
+	public void bye() throws java.rmi.RemoteException{
 		
 	}
 	
-	public LinkedList<Client> who() {
+	public LinkedList<Client> who() throws java.rmi.RemoteException{
 		
 		return listeClients;
+	}
+	
+	public static void main(String args[]) throws IOException {
+		int port; String URL;
+		try { // transformation d'une cha”ne de caract�res en entier
+			Integer I = new Integer(args[0]); port = I.intValue();
+		} catch (Exception ex) {
+			System.out.println(" Please enter: Server <port>");
+			BufferedReader portKeyboard = new BufferedReader(new InputStreamReader(System.in));
+			String portString = portKeyboard.readLine();
+			port = Integer.parseInt(portString);
+		}
+		try {
+			// CrŽation du serveur de nom - rmiregistry
+			Registry registry = LocateRegistry.createRegistry(port);
+			// CrŽation d'une instance de l'objet serveur
+			Chat obj = new ChatServer();
+			// Calcul de l'URL du serveur
+			URL = "//"+InetAddress.getLocalHost().getHostName()+":"+port+"/ChatServer";
+			Naming.rebind(URL, obj);
+		} catch (Exception exc) { }
 	}
 }
