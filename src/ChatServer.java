@@ -69,6 +69,4 @@ public class ChatServer extends UnicastRemoteObject implements Chat {
 		
 		return listeClients;
 	}
-	
-	
 }
