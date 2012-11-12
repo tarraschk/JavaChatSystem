@@ -91,7 +91,7 @@ public class ChatServer extends UnicastRemoteObject implements Chat {
 	
 	public static void main(String args[]) throws IOException {
 		int port; String URL;
-		try { // transformation d'une cha”ne de caract�res en entier
+		try { // transformation d'une chaine de caractères en entier
 			Integer I = new Integer(args[0]); port = I.intValue();
 		} catch (Exception ex) {
 			System.out.println(" Please enter: Server <port>");
@@ -100,10 +100,12 @@ public class ChatServer extends UnicastRemoteObject implements Chat {
 			port = Integer.parseInt(portString);
 		}
 		try {
-			// CrŽation du serveur de nom - rmiregistry
+			// Création du serveur de nom - rmiregistry
 			Registry registry = LocateRegistry.createRegistry(port);
-			// CrŽation d'une instance de l'objet serveur
-			Chat obj = new ChatServer();
+			// Création d'une instance de l'objet serveur
+			ChatServer obj = new ChatServer();
+			obj.setPort(port);
+			Chat objChat = (Chat) obj;
 			// Calcul de l'URL du serveur
 			URL = "//"+InetAddress.getLocalHost().getHostName()+":"+port+"/ChatServer";
 			Naming.rebind(URL, obj);
