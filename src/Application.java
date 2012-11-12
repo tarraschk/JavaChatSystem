@@ -25,7 +25,7 @@ public class Application {
 		Client Clienttest = new Client();
 		Clienttest.lire();
 		int port; String URL;
-		try { // transformation d'une chaîne de caractères en entier
+		try { // transformation d'une cha√Æne de caract√®res en entier
 			Integer I = new Integer(args[0]); port = I.intValue();
 		} catch (Exception ex) {
 			System.out.println(" Please enter: Server <port>");
@@ -34,9 +34,9 @@ public class Application {
 			port = Integer.parseInt(portString);
 		}
 		try {
-			// Création du serveur de nom - rmiregistry
+			// Cr√©ation du serveur de nom - rmiregistry
 			Registry registry = LocateRegistry.createRegistry(port);
-			// Création d'une instance de l'objet serveur
+			// Cr√©ation d'une instance de l'objet serveur
 			Chat obj = new ChatServer();
 			// Calcul de l'URL du serveur
 			URL = "//"+InetAddress.getLocalHost().getHostName()+":"+port+"/ChatServer";
