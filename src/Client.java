@@ -1,17 +1,38 @@
 import java.io.*;
+import java.rmi.Naming;
 import java.util.*;
 
 public class Client {
 	protected int id;
 	protected boolean connectStatus;
+	protected Chat servChat;
 	
+	/**
+	 * Getter et setter de l'objet chat
+	 * @return
+	 */
+	public Chat getServChat() {
+		return servChat;
+	}
+	public void setServChat(Chat servChat) {
+		this.servChat = servChat;
+	}
+	
+	/**
+	 * Getter et setter de statut de connexion
+	 * @return
+	 */
 	public boolean getConnectStatus() {
 		return connectStatus;
 	}
 	public void setConnectStatus(boolean connectStatus) {
 		this.connectStatus = connectStatus;
 	}
-	/* Getters et setters de id */
+	
+	/** 
+	 * Getters et setters de id 
+	 * @return
+	 */
 	public int getId() {
 		return id;
 	}
@@ -26,7 +47,7 @@ public class Client {
 	 * @throws java.rmi.RemoteException
 	 */
 	public String[] lire() throws IOException, java.rmi.RemoteException{
-		System.out.println("Entrer une commande :");
+		System.out.println("Entrez une commande :");
 		BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
 		String cmd = keyboard.readLine();
 		if (cmd.indexOf(' ') != -1) {
@@ -50,13 +71,22 @@ public class Client {
 		
 		while(commandeMessage[0] != "bye") {
 			if(commandeMessage[0]=="connect"){
-				Clienttest.setConnectStatus(connect(commandeMessage[1]));
+				if(!Clienttest.getConnectStatus()) {
+					Chat obj = (Chat) Naming.lookup("//Adri-VAIO/ChatServer");
+					Clienttest.setServChat(obj);
+					System.out.println("Bienvenue sur le serveur !");
+					Clienttest.setConnectStatus(obj.connect(Integer.parseInt(commandeMessage[1])));
+				}
+				else {
+					System.out.println("Vous êtes déjà connecté, essayez une autre commande (send, who, bye)...");
+				}
+					
 			}
 			else if(commandeMessage[0]=="send" && Clienttest.getConnectStatus()){
-				send(commandeMessage[1]);
+				Clienttest.getServChat().send(commandeMessage[1]);
 			}
 			else if(commandeMessage[0]=="who" && Clienttest.getConnectStatus()) {
-				who();
+				Clienttest.getServChat().who();
 			}
 			else if((commandeMessage[0]=="who" || commandeMessage[0]=="send") && !Clienttest.getConnectStatus()) {
 				System.out.println("Veuillez vous connecter auparavant");
