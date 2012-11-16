@@ -45,7 +45,7 @@ public class ChatServer extends UnicastRemoteObject implements Chat {
 		this.historiqueMessages = historiqueMessages;
 	}
 	public void addMessage(String message, Client auteur) {
-		this.historiqueMessages.addLast(auteur+" : "+message);
+		this.historiqueMessages.addLast("Client "+auteur.getId()+" : "+message);
 	}
 	
 	/* Méthodes du port */
