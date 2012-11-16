@@ -74,6 +74,10 @@ public class ChatServer extends UnicastRemoteObject implements Chat {
 	
 	public void send(String message, Client auteur) throws java.rmi.RemoteException{
 		this.addMessage(message,auteur);
+		
+		for(String s:historiqueMessages){
+			System.out.println(s);
+		}
 	}
 	
 	public boolean connect(int id, Client client) throws java.rmi.RemoteException{
@@ -108,7 +112,7 @@ public class ChatServer extends UnicastRemoteObject implements Chat {
 			URL = "//"+InetAddress.getLocalHost().getHostName()+":"+port+"/ChatServer";
 			System.out.println("Le serveur sera lancé sur l'adresse : "+URL);
 			System.out.println("Suppression des entrées existantes dans l'annuaire...");
-			Naming.unbind(URL);
+			//Naming.unbind(URL);
 			// Création du serveur de nom - rmiregistry
 			System.out.println("Création du registre...");
 			Registry registry = LocateRegistry.createRegistry(port);
