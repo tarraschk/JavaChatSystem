@@ -19,7 +19,7 @@ public class ChatServer extends UnicastRemoteObject implements Chat {
 		return URL;
 	}
 	public void setURL(String uRL) {
-		URL = uRL;
+		this.URL = uRL;
 	}
 	
 	/* Méthodes liées à l'argument listeClients */
@@ -112,10 +112,12 @@ public class ChatServer extends UnicastRemoteObject implements Chat {
 			// Création d'une instance de l'objet serveur
 			ChatServer obj = new ChatServer();
 			obj.setPort(port);
+			obj.setURL(URL);
 			Chat objChat = (Chat) obj;
 			// Calcul de l'URL du serveur
 			Naming.rebind(URL, obj);
-			System.out.println("Serveur lancé !");
+			System.out.println("Serveur lancé sur l'adresse :");
+			System.out.println(URL);
 		} catch (Exception exc) {
 			System.out.println(exc);
 		}

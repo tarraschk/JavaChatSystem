@@ -42,7 +42,7 @@ public class Client {
 	}
 	
 	/**
-	 * Récupère la commande tapée par le client et sépare la commande de l'argument
+	 * Rï¿½cupï¿½re la commande tapï¿½e par le client et sï¿½pare la commande de l'argument
 	 * (pour l'instant) affiche command - argument
 	 * @throws IOException
 	 * @throws java.rmi.RemoteException
@@ -71,13 +71,15 @@ public class Client {
 		Client clienttest = new Client();
 		String[] commandeMessage = new String[2];
 		commandeMessage = clienttest.lire();
-		
+		System.out.println(commandeMessage[0]);
+		System.out.println(commandeMessage[1]);
 		while(commandeMessage[0] != "bye") {
 			if(commandeMessage[0].equals("connect")){
 				if(!clienttest.getConnectStatus()) {
 					Chat obj;
 					try {
-						obj = (Chat) Naming.lookup("//Adri-VAIO:8080/ChatServer");
+						System.out.println("Connexion Ã  //Adri-VAIO"+commandeMessage[1]+"/ChatServer...");
+						obj = (Chat) Naming.lookup("//Adri-VAIO"+commandeMessage[1]+"/ChatServer");
 						clienttest.setServChat(obj);
 						System.out.println("Bienvenue sur le serveur !");
 						clienttest.setConnectStatus(obj.connect(Integer.parseInt(commandeMessage[1]), clienttest));
@@ -85,10 +87,9 @@ public class Client {
 						System.out.println("Erreur de connexion !");
 						e.printStackTrace();
 					}
-					
 				}
 				else {
-					System.out.println("Vous êtes déjà connecté, essayez une autre commande (send, who, bye)...");
+					System.out.println("Vous ï¿½tes dï¿½jï¿½ connectï¿½, essayez une autre commande (send, who, bye)...");
 				}
 					
 			}
@@ -105,7 +106,7 @@ public class Client {
 			commandeMessage = clienttest.lire();
 		}
 		
-		System.out.println("A bientôt !");
+		System.out.println("A bientï¿½t !");
 		
 	}
 }
