@@ -78,7 +78,7 @@ public class Client  implements Serializable {
 				if(!clienttest.getConnectStatus()) {
 					Chat obj;
 					try {
-						System.out.println("Connexion à  //Adri-VAIO:8000/ChatServer...");
+						System.out.println("Connexion ï¿½ //Adri-VAIO:8000/ChatServer...");
 						obj = (Chat) Naming.lookup("//Adri-VAIO:8000/ChatServer");
 						clienttest.setServChat(obj);
 						clienttest.setConnectStatus(obj.connect(Integer.parseInt(commandeMessage[1]), clienttest));

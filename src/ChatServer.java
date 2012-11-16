@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.rmi.Naming;
+import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
@@ -129,5 +130,13 @@ public class ChatServer extends UnicastRemoteObject implements Chat {
 		} catch (Exception exc) {
 			System.out.println(exc);
 		}
+	}
+	/* (non-Javadoc)
+	 * @see Chat#afficher()
+	 */
+	@Override
+	public String afficher() throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
