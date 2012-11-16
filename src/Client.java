@@ -79,7 +79,7 @@ public class Client  implements Serializable {
 				if(!clienttest.getConnectStatus()) {
 					Chat obj;
 					try {
-						System.out.println("Connexion � //Adri-VAIO:8000/ChatServer...");
+						System.out.println("Connexion à //Adri-VAIO:8000/ChatServer...");
 						obj = (Chat) Naming.lookup("//Adri-VAIO:8000/ChatServer");
 						clienttest.setServChat(obj);
 						clienttest.setId(commandeMessage[1]);
@@ -91,7 +91,7 @@ public class Client  implements Serializable {
 					}
 				}
 				else {
-					System.out.println("Vous �tes d�j� connect�, essayez une autre commande (send, who, bye)...");
+					System.out.println("Vous êtes déjà connecté, essayez une autre commande (send, who, bye)...");
 				}
 					
 			}
@@ -110,7 +110,7 @@ public class Client  implements Serializable {
 			commandeMessage = clienttest.lire();
 		}
 		
-		System.out.println("A bient�t !");
+		System.out.println("A bientôt !");
 		
 	}
 	/**
