@@ -84,8 +84,8 @@ public class ChatServer extends UnicastRemoteObject implements Chat {
 		return true;
 	}
 	
-	public void bye() throws java.rmi.RemoteException{
-		
+	public void bye(Client client) throws java.rmi.RemoteException{
+		listeClients.remove(client);
 	}
 	
 	public void who() throws java.rmi.RemoteException{
