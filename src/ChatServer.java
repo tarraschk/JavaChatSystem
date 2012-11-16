@@ -136,7 +136,9 @@ public class ChatServer extends UnicastRemoteObject implements Chat {
 	 */
 	@Override
 	public String afficher() throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		String chaine="";
+		for(String s:historiqueMessages)
+			chaine=chaine+s+"\n";
+		return chaine;
 	}
 }
