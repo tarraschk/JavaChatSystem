@@ -4,7 +4,7 @@ import java.rmi.NotBoundException;
 import java.util.*;
 
 public class Client  implements Serializable {
-	protected int id;
+	protected String id;
 	protected int lectureId = 0;
 	protected boolean connectStatus = false;
 	protected Chat servChat;
@@ -35,10 +35,10 @@ public class Client  implements Serializable {
 	 * Getters et setters de id 
 	 * @return
 	 */
-	public int getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	
@@ -80,10 +80,11 @@ public class Client  implements Serializable {
 				if(!clienttest.getConnectStatus()) {
 					Chat obj;
 					try {
-						System.out.println("Connexion � //Adri-VAIO:8000/ChatServer...");
+						System.out.println("Connexion à //Adri-VAIO:8000/ChatServer...");
 						obj = (Chat) Naming.lookup("//Adri-VAIO:8000/ChatServer");
 						clienttest.setServChat(obj);
-						clienttest.setConnectStatus(obj.connect(Integer.parseInt(commandeMessage[1]), clienttest));
+						clienttest.setId(commandeMessage[1]);
+						clienttest.setConnectStatus(obj.connect(commandeMessage[1], clienttest));
 						System.out.println("Bienvenue sur le serveur !");
 					} catch (Exception e) {
 						System.out.println("Erreur de connexion !");
@@ -91,7 +92,7 @@ public class Client  implements Serializable {
 					}
 				}
 				else {
-					System.out.println("Vous �tes d�j� connect�, essayez une autre commande (send, who, bye)...");
+					System.out.println("Vous êtes déjà connecté, essayez une autre commande (send, who, bye)...");
 				}
 					
 			}
@@ -113,7 +114,7 @@ public class Client  implements Serializable {
 			commandeMessage = clienttest.lire();
 		}
 		
-		System.out.println("A bient�t !");
+		System.out.println("A bientôt !");
 		
 	}
 	/**
