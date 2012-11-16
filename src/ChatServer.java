@@ -137,11 +137,8 @@ public class ChatServer extends UnicastRemoteObject implements Chat {
 	@Override
 	public String afficher(int lectureId) throws RemoteException {
 		String chaine="";
-		int j = 0;
-		for(String s:historiqueMessages) {
-			if (j >= lectureId) {
-				chaine=chaine+s+"\n";	
-			}
+		for(int j=lectureId;j<this.getHistoriqueMessages().size();j++) {
+			chaine = chaine+this.getHistoriqueMessages().get(j)+"\n";
 		}
 		return chaine;
 	}
@@ -157,7 +154,6 @@ public class ChatServer extends UnicastRemoteObject implements Chat {
 	 */
 	@Override
 	public int getSize() throws RemoteException {
-		this.getHistoriqueMessages().size();
-		return 0;
+		return this.getHistoriqueMessages().size();
 	}
 }
