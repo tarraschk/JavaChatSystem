@@ -9,7 +9,7 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
 public class ChatServer extends UnicastRemoteObject implements Chat {
-	protected LinkedList<Client> listeClients;
+	protected Hashtable<Integer,Client> listeClients;
 	protected LinkedList<String> historiqueMessages;
 	protected int port;
 	protected String URL;
@@ -23,14 +23,14 @@ public class ChatServer extends UnicastRemoteObject implements Chat {
 	}
 	
 	/* Méthodes liées à l'argument listeClients */
-	public LinkedList<Client> getListeClients() {
+	public Hashtable<Integer,Client> getListeClients() {
 		return listeClients;
 	}
-	public void setListeClients(LinkedList<Client> listeClients) {
+	public void setListeClients(Hashtable<Integer,Client> listeClients) {
 		this.listeClients = listeClients;
 	}
-	public void addClient(Client client) {
-		this.listeClients.addLast(client);
+	public void addClient(int id, Client client) {
+		this.listeClients.put(id,client);
 	}
 	public void removeClient(Client client) {
 		this.listeClients.remove(client);
@@ -57,7 +57,7 @@ public class ChatServer extends UnicastRemoteObject implements Chat {
 
 	// Implémentation du constructeur
 	public ChatServer() throws java.rmi.RemoteException {
-		LinkedList<Client> liste = new LinkedList<Client>();
+		Hashtable<Integer,Client> liste = new Hashtable<Integer,Client>();
 		LinkedList<String> historique = new LinkedList<String>();
 		listeClients = liste;
 		historiqueMessages = historique;
@@ -72,21 +72,26 @@ public class ChatServer extends UnicastRemoteObject implements Chat {
 			System.out.println(s);
 	}
 	
-	public void send(String message) throws java.rmi.RemoteException{
-		
+	public void send(String message, Client auteur) throws java.rmi.RemoteException{
+		this.addMessage(message,auteur);
 	}
 	
-	public void connect(int id) throws java.rmi.RemoteException{
+	public boolean connect(int id, Client client) throws java.rmi.RemoteException{
+		this.addClient(id, client);
 		
+		return true;
 	}
 	
 	public void bye() throws java.rmi.RemoteException{
 		
 	}
 	
-	public LinkedList<Client> who() throws java.rmi.RemoteException{
+	public void who() throws java.rmi.RemoteException{
 		
-		return listeClients;
+		 for (Enumeration<Integer> e = listeClients.keys() ; e.hasMoreElements() ;) {
+	         System.out.println(e.nextElement()+" : "+listeClients.get(e));
+	     }
+		
 	}
 	
 	public static void main(String args[]) throws IOException {
@@ -100,6 +105,8 @@ public class ChatServer extends UnicastRemoteObject implements Chat {
 			port = Integer.parseInt(portString);
 		}
 		try {
+			URL = "//"+InetAddress.getLocalHost().getHostName()+":"+port+"/ChatServer";
+			Naming.unbind(URL);
 			// Création du serveur de nom - rmiregistry
 			Registry registry = LocateRegistry.createRegistry(port);
 			// Création d'une instance de l'objet serveur
@@ -107,8 +114,10 @@ public class ChatServer extends UnicastRemoteObject implements Chat {
 			obj.setPort(port);
 			Chat objChat = (Chat) obj;
 			// Calcul de l'URL du serveur
-			URL = "//"+InetAddress.getLocalHost().getHostName()+":"+port+"/ChatServer";
 			Naming.rebind(URL, obj);
-		} catch (Exception exc) { }
+			System.out.println("Serveur lancé !");
+		} catch (Exception exc) {
+			System.out.println(exc);
+		}
 	}
 }

@@ -1,5 +1,6 @@
 import java.io.*;
 import java.rmi.Naming;
+import java.rmi.NotBoundException;
 import java.util.*;
 
 public class Client {
@@ -54,7 +55,9 @@ public class Client {
 			String[] commande = new String[2];
 			commande[0] = cmd.substring(0, cmd.indexOf(' '));
 			commande[1] = cmd.substring(cmd.indexOf(' '));
-			System.out.println("Commande : "+commande[0]+" - "+commande[1]);
+			
+			if(commande[1]!= null)
+				commande[1]="0";
 			
 			return commande;
 		}
@@ -64,35 +67,35 @@ public class Client {
 		}
 	}
 	
-	public static void main(String args[]) throws IOException {
-		Client Clienttest = new Client();
+	public static void main(String args[]) throws IOException, NotBoundException {
+		Client clienttest = new Client();
 		String[] commandeMessage = new String[2];
-		commandeMessage = Clienttest.lire();
+		commandeMessage = clienttest.lire();
 		
 		while(commandeMessage[0] != "bye") {
-			if(commandeMessage[0]=="connect"){
-				if(!Clienttest.getConnectStatus()) {
-					Chat obj = (Chat) Naming.lookup("//Adri-VAIO/ChatServer");
-					Clienttest.setServChat(obj);
+			if(commandeMessage[0].equals("connect")){
+				if(!clienttest.getConnectStatus()) {
+					Chat obj = (Chat) Naming.lookup("//Adri-VAIO"+obj.getPort()+"/ChatServer");
+					clienttest.setServChat(obj);
 					System.out.println("Bienvenue sur le serveur !");
-					Clienttest.setConnectStatus(obj.connect(Integer.parseInt(commandeMessage[1])));
+					clienttest.setConnectStatus(obj.connect(Integer.parseInt(commandeMessage[1]), clienttest));
 				}
 				else {
 					System.out.println("Vous êtes déjà connecté, essayez une autre commande (send, who, bye)...");
 				}
 					
 			}
-			else if(commandeMessage[0]=="send" && Clienttest.getConnectStatus()){
-				Clienttest.getServChat().send(commandeMessage[1]);
+			else if(commandeMessage[0].equals("send") && clienttest.getConnectStatus()){
+				clienttest.getServChat().send(commandeMessage[1],clienttest);
 			}
-			else if(commandeMessage[0]=="who" && Clienttest.getConnectStatus()) {
-				Clienttest.getServChat().who();
+			else if(commandeMessage[0].equals("who") && clienttest.getConnectStatus()) {
+				clienttest.getServChat().who();
 			}
-			else if((commandeMessage[0]=="who" || commandeMessage[0]=="send") && !Clienttest.getConnectStatus()) {
+			else if((commandeMessage[0].equals("who") || commandeMessage[0].equals("send")) && !clienttest.getConnectStatus()) {
 				System.out.println("Veuillez vous connecter auparavant");
 			}
 			
-			commandeMessage = Clienttest.lire();
+			commandeMessage = clienttest.lire();
 		}
 		
 		System.out.println("A bientôt !");
