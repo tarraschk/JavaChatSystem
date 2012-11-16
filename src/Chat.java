@@ -6,5 +6,7 @@ public interface Chat extends java.rmi.Remote {
 	public void bye() throws java.rmi.RemoteException;
 	public void who() throws java.rmi.RemoteException;
 	public String afficher() throws java.rmi.RemoteException;
+	public void vider() throws java.rmi.RemoteException;
+	public int getSize() throws java.rmi.RemoteException;
 }
 

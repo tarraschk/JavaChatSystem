@@ -141,4 +141,19 @@ public class ChatServer extends UnicastRemoteObject implements Chat {
 			chaine=chaine+s+"\n";
 		return chaine;
 	}
+	/* (non-Javadoc)
+	 * @see Chat#vider()
+	 */
+	@Override
+	public void vider() throws RemoteException {
+		this.setHistoriqueMessages(null);
+	}
+	/* (non-Javadoc)
+	 * @see Chat#getSize()
+	 */
+	@Override
+	public int getSize() throws RemoteException {
+		this.getHistoriqueMessages().size();
+		return 0;
+	}
 }
