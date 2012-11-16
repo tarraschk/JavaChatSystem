@@ -107,16 +107,24 @@ public class ChatServer extends UnicastRemoteObject implements Chat {
 		try {
 			URL = "//"+InetAddress.getLocalHost().getHostName()+":"+port+"/ChatServer";
 			System.out.println("Le serveur sera lancé sur l'adresse : "+URL);
+			System.out.println("Suppression des entrées existantes dans l'annuaire...");
 			Naming.unbind(URL);
 			// Création du serveur de nom - rmiregistry
+			System.out.println("Création du registre...");
 			Registry registry = LocateRegistry.createRegistry(port);
 			// Création d'une instance de l'objet serveur
+			System.out.println("Création de l'instance serveur...");
 			ChatServer obj = new ChatServer();
+			System.out.println("Paramétrage du port...");
 			obj.setPort(port);
+			System.out.println("Paramétrage de l'url...");
 			obj.setURL(URL);
+			System.out.println("Conversion en mode Chat...");
 			Chat objChat = (Chat) obj;
 			// Calcul de l'URL du serveur
+			System.out.println("Association dans l'annuaire...");
 			Naming.rebind(URL, obj);
+			System.out.println("Serveur lancé, écoute en cours...");
 		} catch (Exception exc) {
 			System.out.println(exc);
 		}
