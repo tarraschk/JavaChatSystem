@@ -5,7 +5,7 @@ import java.util.*;
 
 public class Client {
 	protected int id;
-	protected boolean connectStatus;
+	protected boolean connectStatus = false;
 	protected Chat servChat;
 	
 	/**
@@ -56,7 +56,7 @@ public class Client {
 			commande[0] = cmd.substring(0, cmd.indexOf(' '));
 			commande[1] = cmd.substring(cmd.indexOf(' '));
 			
-			if(commande[1]!= null)
+			if(commande[1]== null)
 				commande[1]="0";
 			
 			return commande;
@@ -75,10 +75,17 @@ public class Client {
 		while(commandeMessage[0] != "bye") {
 			if(commandeMessage[0].equals("connect")){
 				if(!clienttest.getConnectStatus()) {
-					Chat obj = (Chat) Naming.lookup("//Adri-VAIO"+obj.getPort()+"/ChatServer");
-					clienttest.setServChat(obj);
-					System.out.println("Bienvenue sur le serveur !");
-					clienttest.setConnectStatus(obj.connect(Integer.parseInt(commandeMessage[1]), clienttest));
+					Chat obj;
+					try {
+						obj = (Chat) Naming.lookup("//Adri-VAIO:8080/ChatServer");
+						clienttest.setServChat(obj);
+						System.out.println("Bienvenue sur le serveur !");
+						clienttest.setConnectStatus(obj.connect(Integer.parseInt(commandeMessage[1]), clienttest));
+					} catch (Exception e) {
+						System.out.println("Erreur de connexion !");
+						e.printStackTrace();
+					}
+					
 				}
 				else {
 					System.out.println("Vous êtes déjà connecté, essayez une autre commande (send, who, bye)...");
