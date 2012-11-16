@@ -67,12 +67,6 @@ public class Client  implements Serializable {
 		}
 	}
 	
-	public void obtenirMessages(Client serveur) {
-		for(String s:){
-			System.out.println(s);
-		}
-	}
-	
 	public static void main(String args[]) throws IOException, NotBoundException{
 		Client clienttest = new Client();
 		String[] commandeMessage = new String[2];
