@@ -10,7 +10,7 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
 public class ChatServer extends UnicastRemoteObject implements Chat {
-	protected Hashtable<Integer,Client> listeClients;
+	protected Hashtable<String,Client> listeClients;
 	protected LinkedList<String> historiqueMessages;
 	protected int port;
 	protected String URL;
@@ -24,13 +24,13 @@ public class ChatServer extends UnicastRemoteObject implements Chat {
 	}
 	
 	/* Méthodes liées à l'argument listeClients */
-	public Hashtable<Integer,Client> getListeClients() {
+	public Hashtable<String,Client> getListeClients() {
 		return listeClients;
 	}
-	public void setListeClients(Hashtable<Integer,Client> listeClients) {
+	public void setListeClients(Hashtable<String,Client> listeClients) {
 		this.listeClients = listeClients;
 	}
-	public void addClient(int id, Client client) {
+	public void addClient(String id, Client client) {
 		this.listeClients.put(id,client);
 	}
 	public void removeClient(Client client) {
@@ -58,7 +58,7 @@ public class ChatServer extends UnicastRemoteObject implements Chat {
 
 	// Implémentation du constructeur
 	public ChatServer() throws java.rmi.RemoteException {
-		Hashtable<Integer,Client> liste = new Hashtable<Integer,Client>();
+		Hashtable<String,Client> liste = new Hashtable<String,Client>();
 		LinkedList<String> historique = new LinkedList<String>();
 		listeClients = liste;
 		historiqueMessages = historique;
@@ -78,8 +78,8 @@ public class ChatServer extends UnicastRemoteObject implements Chat {
 		afficherHistoriqueMessage();
 	}
 	
-	public boolean connect(int id, Client client) throws java.rmi.RemoteException{
-		this.addClient(id, client);
+	public boolean connect(String id, Client client) throws java.rmi.RemoteException{
+		this.addClient(client.getId(), client);
 		
 		return true;
 	}
@@ -90,7 +90,7 @@ public class ChatServer extends UnicastRemoteObject implements Chat {
 	
 	public void who() throws java.rmi.RemoteException{
 		
-		 for (Enumeration<Integer> e = listeClients.keys() ; e.hasMoreElements() ;) {
+		 for (Enumeration<String> e = listeClients.keys() ; e.hasMoreElements() ;) {
 	         System.out.println(e.nextElement()+" : "+listeClients.get(e));
 	     }
 		
