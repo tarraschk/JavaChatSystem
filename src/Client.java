@@ -57,7 +57,7 @@ public class Client  implements Serializable {
 			commande[0] = cmd.substring(0, cmd.indexOf(' '));
 			commande[1] = cmd.substring(cmd.indexOf(' ')+1);
 			
-			if(commande[1]== null)
+			if(commande[1].equals(""))
 				commande[1]="0";
 			
 			return commande;
