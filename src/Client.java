@@ -67,6 +67,12 @@ public class Client  implements Serializable {
 		}
 	}
 	
+	public void obtenirMessages(Client serveur) {
+		for(String s:){
+			System.out.println(s);
+		}
+	}
+	
 	public static void main(String args[]) throws IOException, NotBoundException{
 		Client clienttest = new Client();
 		String[] commandeMessage = new String[2];
@@ -78,7 +84,7 @@ public class Client  implements Serializable {
 				if(!clienttest.getConnectStatus()) {
 					Chat obj;
 					try {
-						System.out.println("Connexion à  //Adri-VAIO:8000/ChatServer...");
+						System.out.println("Connexion ï¿½ //Adri-VAIO:8000/ChatServer...");
 						obj = (Chat) Naming.lookup("//Adri-VAIO:8000/ChatServer");
 						clienttest.setServChat(obj);
 						clienttest.setConnectStatus(obj.connect(Integer.parseInt(commandeMessage[1]), clienttest));
