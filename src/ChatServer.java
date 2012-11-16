@@ -74,10 +74,7 @@ public class ChatServer extends UnicastRemoteObject implements Chat {
 	
 	public void send(String message, Client auteur) throws java.rmi.RemoteException{
 		this.addMessage(message,auteur);
-		
-		for(String s:historiqueMessages){
-			System.out.println(s);
-		}
+		afficherHistoriqueMessage();
 	}
 	
 	public boolean connect(int id, Client client) throws java.rmi.RemoteException{
