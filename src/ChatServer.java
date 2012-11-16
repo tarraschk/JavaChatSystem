@@ -135,10 +135,14 @@ public class ChatServer extends UnicastRemoteObject implements Chat {
 	 * @see Chat#afficher()
 	 */
 	@Override
-	public String afficher() throws RemoteException {
+	public String afficher(int lectureId) throws RemoteException {
 		String chaine="";
-		for(String s:historiqueMessages)
-			chaine=chaine+s+"\n";
+		int j = 0;
+		for(String s:historiqueMessages) {
+			if (j >= lectureId) {
+				chaine=chaine+s+"\n";	
+			}
+		}
 		return chaine;
 	}
 	/* (non-Javadoc)

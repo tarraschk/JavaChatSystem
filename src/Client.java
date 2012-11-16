@@ -5,6 +5,7 @@ import java.util.*;
 
 public class Client  implements Serializable {
 	protected int id;
+	protected int lectureId = 0;
 	protected boolean connectStatus = false;
 	protected Chat servChat;
 	
@@ -95,7 +96,8 @@ public class Client  implements Serializable {
 			}
 			else if(commandeMessage[0].equals("send") && clienttest.getConnectStatus()){
 				clienttest.getServChat().send(commandeMessage[1],clienttest);
-				System.out.println(clienttest.getServChat().afficher());
+				System.out.println(clienttest.getServChat().afficher(clienttest.getLectureId()));
+				clienttest.setLectureId(clienttest.getServChat().getSize());
 			}
 			else if(commandeMessage[0].equals("who") && clienttest.getConnectStatus()) {
 				clienttest.getServChat().who();
@@ -109,5 +111,17 @@ public class Client  implements Serializable {
 		
 		System.out.println("A bient�t !");
 		
+	}
+	/**
+	 * @return the lectureId
+	 */
+	public int getLectureId() {
+		return lectureId;
+	}
+	/**
+	 * @param lectureId the lectureId to set
+	 */
+	public void setLectureId(int lectureId) {
+		this.lectureId = lectureId;
 	}
 }
