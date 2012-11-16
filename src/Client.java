@@ -95,9 +95,7 @@ public class Client  implements Serializable {
 			}
 			else if(commandeMessage[0].equals("send") && clienttest.getConnectStatus()){
 				clienttest.getServChat().send(commandeMessage[1],clienttest);
-				for(String s : ((ChatServer) clienttest.getServChat()).getHistoriqueMessages()){
-					System.out.println(s);
-				}
+				clienttest.getServChat().afficher();
 			}
 			else if(commandeMessage[0].equals("who") && clienttest.getConnectStatus()) {
 				clienttest.getServChat().who();
