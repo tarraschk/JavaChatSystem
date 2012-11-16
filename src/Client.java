@@ -52,8 +52,7 @@ public class Client  implements Serializable {
 		System.out.println("Entrez une commande :");
 		BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
 		String cmd = keyboard.readLine();
-		if (cmd.indexOf(' ') != -1) {
-			String[] commande = new String[2];
+		String[] commande = new String[2];
 			if (cmd.indexOf(' ') >= 0) {
 				commande[0] = cmd.substring(0, cmd.indexOf(' '));
 				commande[1] = cmd.substring(cmd.indexOf(' ')+1);	
@@ -61,14 +60,10 @@ public class Client  implements Serializable {
 			else {
 				commande[0]=cmd;
 				commande[1]="0";
+				System.out.println("Erreur de commande");
 			}
 			
 			return commande;
-		}
-		else {
-			System.out.println("Erreur de commande");
-			return null;
-		}
 	}
 	
 	public static void main(String args[]) throws IOException, NotBoundException{
