@@ -84,16 +84,16 @@ public class ChatServer extends UnicastRemoteObject implements Chat {
 		return true;
 	}
 	
-	public void bye() throws java.rmi.RemoteException{
+	public void bye(Client client) throws java.rmi.RemoteException{
 		
 	}
 	
-	public void who() throws java.rmi.RemoteException{
-		
+	public String who() throws java.rmi.RemoteException{
+		String chaine = "Clients connectés:\n";
 		 for (Enumeration<Integer> e = listeClients.keys() ; e.hasMoreElements() ;) {
-	         System.out.println(e.nextElement()+" : "+listeClients.get(e));
+	         chaine = chaine + e.nextElement()+" : "+listeClients.get(e)+"\n";
 	     }
-		
+		return chaine;
 	}
 	
 	public static void main(String args[]) throws IOException {

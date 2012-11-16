@@ -74,7 +74,8 @@ public class Client  implements Serializable {
 		commandeMessage = clienttest.lire();
 		System.out.println(commandeMessage[0]);
 		System.out.println(commandeMessage[1]);
-		while(commandeMessage[0] != "bye") {
+		boolean continuer = true;
+		while(continuer) {
 			if(commandeMessage[0].equals("connect")){
 				if(!clienttest.getConnectStatus()) {
 					Chat obj;
@@ -100,12 +101,15 @@ public class Client  implements Serializable {
 				clienttest.setLectureId(clienttest.getServChat().getSize());
 			}
 			else if(commandeMessage[0].equals("who") && clienttest.getConnectStatus()) {
-				clienttest.getServChat().who();
+				System.out.println(clienttest.getServChat().who());
 			}
 			else if((commandeMessage[0].equals("who") || commandeMessage[0].equals("send")) && !clienttest.getConnectStatus()) {
 				System.out.println("Veuillez vous connecter auparavant");
 			}
-			
+			else if((commandeMessage[0].equals("bye"))) {
+				clienttest.getServChat().bye(clienttest);
+				continuer = false;
+			}
 			commandeMessage = clienttest.lire();
 		}
 		
