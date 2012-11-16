@@ -54,11 +54,14 @@ public class Client  implements Serializable {
 		String cmd = keyboard.readLine();
 		if (cmd.indexOf(' ') != -1) {
 			String[] commande = new String[2];
-			commande[0] = cmd.substring(0, cmd.indexOf(' '));
-			commande[1] = cmd.substring(cmd.indexOf(' ')+1);
-			
-			if(commande[1].equals(""))
+			if (cmd.indexOf(' ') >= 0) {
+				commande[0] = cmd.substring(0, cmd.indexOf(' '));
+				commande[1] = cmd.substring(cmd.indexOf(' ')+1);	
+			}
+			else {
+				commande[0]=cmd;
 				commande[1]="0";
+			}
 			
 			return commande;
 		}
