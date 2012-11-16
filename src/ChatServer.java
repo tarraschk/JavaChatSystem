@@ -91,7 +91,7 @@ public class ChatServer extends UnicastRemoteObject implements Chat {
 	public String who() throws java.rmi.RemoteException{
 		String chaine = "Clients connectés:\n";
 		 for (Enumeration<String> e = listeClients.keys() ; e.hasMoreElements() ;) {
-	         chaine = chaine + e.nextElement()+" : "+listeClients.get(e)+"\n";
+	         chaine = "@"+chaine + e.nextElement()+"\n";
 	     }
 		return chaine;
 	}

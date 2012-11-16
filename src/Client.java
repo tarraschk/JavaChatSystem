@@ -60,7 +60,6 @@ public class Client  implements Serializable {
 			else {
 				commande[0]=cmd;
 				commande[1]="0";
-				System.out.println("Erreur de commande");
 			}
 			
 			return commande;
@@ -108,11 +107,12 @@ public class Client  implements Serializable {
 			else if((commandeMessage[0].equals("bye"))) {
 				clienttest.getServChat().bye(clienttest);
 				continuer = false;
+				System.out.println("A bientôt !");
+				break;
 			}
 			commandeMessage = clienttest.lire();
 		}
 		
-		System.out.println("A bientôt !");
 		
 	}
 	/**
